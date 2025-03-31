@@ -1,0 +1,117 @@
+import { Anixart } from "../client";
+import {
+    IBadgesResponse,
+    IEmailChangeConfirmResponse,
+    IEmailChangeRequest,
+    ILoginInfoResponse,
+    INewLogin,
+    IProfileSettingsResponse,
+    PrivacyFriendRequestState,
+    PrivacyState,
+    IProfileShort, 
+    ISocialResponse, 
+    IBaseApiParams, 
+    IPageableResponse, 
+    IResponse,
+    IPasswordChangeResponse
+} from "../types";
+
+export class Settings {
+    public constructor(private readonly client: Anixart) { }
+
+    public async getCurrentProfileSettings(options?: IBaseApiParams): Promise<IProfileSettingsResponse> {
+        return await this.client.call<IProfileSettingsResponse>({ path: `/profile/preference/my`, ...options });
+    }
+
+    public async getBadges(page: number, options?: IBaseApiParams): Promise<IBadgesResponse> {
+        return await this.client.call<IBadgesResponse>({ path: `/profile/preference/badges/${page}`, ...options });
+    }
+
+    public async setStatus(status: string, options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/preference/status/edit`, json: { status }, ...options });
+    }
+
+    public async getBlocklist(page: number, options?: IBaseApiParams): Promise<IPageableResponse<IProfileShort>> {
+        return await this.client.call<IPageableResponse<IProfileShort>>({ path: `/profile/preference/blocklist/${page}`, ...options });
+    }
+
+    public async getSocial(options?: IBaseApiParams): Promise<ISocialResponse> {
+        return await this.client.call<ISocialResponse>({ path: `/profile/preference/social`, ...options });
+    }
+
+    public async setSocial(data: ISocialResponse, options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/preference/social/edit`, json: {vkPage: data.vk_page, tgPage: data.tg_page, instPage: data.inst_page, ttPage: data.tt_page, discordPage: data.discord_page}, ...options });
+    }
+
+    public async confirmChangeEmail(currentPassword: string, options?: IBaseApiParams): Promise<IEmailChangeConfirmResponse> {
+        return await this.client.call<IEmailChangeConfirmResponse>({ path: `/profile/preference/email/confirm`, queryParams: { current: currentPassword }, ...options });
+    }
+
+    public changeEmail(data: IEmailChangeRequest, options?: IBaseApiParams): Promise<IResponse> {
+        return this.client.call<IResponse>({ path: `/profile/preference/email/edit`, queryParams: { current_password: data.password, current: data.oldEmail, new: data.newEmail }, ...options });
+    }
+
+    public async changePassword(currentPassword: string, newPassword: string, options?: IBaseApiParams): Promise<IPasswordChangeResponse> {
+        return await this.client.call<IPasswordChangeResponse>({ path: `/profile/preference/password/edit`, queryParams: { current: currentPassword, new: newPassword }, ...options });
+    }
+
+    public async addBlocklist(id: number, options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/blocklist/add/${id}`, ...options });
+    }
+
+    public async removeBlocklist(id: number, options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/blocklist/remove/${id}`, ...options });
+    }
+
+    public async getLoginInfo(options?: IBaseApiParams): Promise<ILoginInfoResponse> {
+        return await this.client.call<ILoginInfoResponse>({ path: `/profile/preference/login/info`, ...options });
+    }
+
+    public async getLoginHistory(id: number, page: number, options?: IBaseApiParams): Promise<IPageableResponse<INewLogin>> {
+        return await this.client.call<IPageableResponse<INewLogin>>({ path: `/profile/login/history/all/${id}/${page}`, ...options });
+    }
+
+    public async changeLogin(newLogin: string, options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/preference/login/change`, queryParams: { login: newLogin }, ...options });
+    }
+
+    public async setCommentNotification(options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/preference/notification/comment/edit`, ...options });
+    }
+
+    public async setCollectionCommentNotification(options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/preference/notification/my/collection/comment/edit`, ...options });
+    }
+
+    public async setReportProgressNotification(options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/preference/notification/report/process/edit`, ...options });
+    }
+
+    public async setRelatedReleaseNotification(options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/preference/notification/related/release/edit`, ...options });
+    }
+
+    public async setEpisodeNotification(options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/preference/notification/episode/edit`, ...options });
+    }
+
+    public async setStatusNotification(options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/preference/notification/status/edit`, ...options });
+    }
+
+    public async setPrivacyStats(state: PrivacyState, options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/preference/privacy/stats/edit`, json: { permission: state }, ...options });
+    }
+
+    public async setPrivacyCounts(state: PrivacyState, options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/preference/privacy/counts/edit`, json: { permission: state }, ...options });
+    }
+
+    public async setPrivacySocial(state: PrivacyState, options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/preference/privacy/social/edit`, json: { permission: state }, ...options });
+    }
+
+    public async setPrivacyFriendRequests(state: PrivacyFriendRequestState, options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/preference/privacy/friendRequests/edit`, json: { permission: state }, ...options });
+    }
+}

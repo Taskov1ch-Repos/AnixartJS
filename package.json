@@ -1,0 +1,32 @@
+{
+  "name": "anixartjs",
+  "version": "0.0.1",
+  "description": "Anixart API Wrapper for NodeJS",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf ./dist && tsc",
+    "build-win": "rd .\\dist /s /q && tsc"
+  },
+  "keywords": [
+    "api",
+    "anixart",
+    "wrapper",
+    "anime"
+  ],
+  "homepage": "https://github.com/theDesConnet/AnixartJS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theDesConnet/AnixartJS.git"
+  },
+  "author": "Roman U. (DesConnet)",
+  "license": "GPL-2.0",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "form-data": "^4.0.2"
+  }
+}

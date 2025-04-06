@@ -1,5 +1,5 @@
 import { Anixart } from "../client";
-import { BookmarkType, IBaseCommentAddRequest, IEpisodeLastUpdate, IRelated, IRelease, IReleaseCategory, IReleaseStatus, ResponseCode, Writable } from "../types";
+import { BookmarkType, IBaseCommentAddRequest, ICommentRelease, IEpisodeLastUpdate, IRelated, IRelease, IReleaseCategory, IReleaseStatus, IVideoBanners, ResponseCode, Writable } from "../types";
 import { Dubber } from "./Dubber";
 import { ReleaseComment } from "./ReleaseComment";
 
@@ -24,11 +24,11 @@ export class Release {
     public readonly duration: number;
     public readonly season: number;
     public readonly broadcast: number;
-    public readonly screenshots: any[];
-    public readonly comments: any[];
+    public readonly screenshots: string[];
+    public readonly comments: ICommentRelease[];
     public readonly titleOriginal: string;
     public readonly titleRu: string;
-    public readonly titleAlt: null;
+    public readonly titleAlt: string;
     public readonly episodesReleased: number;
     public readonly episodesTotal: number;
     public readonly releaseDate: string;
@@ -66,12 +66,12 @@ export class Release {
     public readonly isViewed: boolean;
     public readonly isFavorite: boolean;
     public readonly isViewBlocked: boolean;
-    public readonly screenshotImages: any[];
+    public readonly screenshotImages: string[];
     public readonly relatedReleases: Release[] | null;
     public readonly recommendedReleases: Release[];
     public readonly episodeLastUpdate: IEpisodeLastUpdate;
     public readonly commentPerDayCount: number;
-    public readonly videoBanners: any[];
+    public readonly videoBanners: IVideoBanners[];
     public readonly profileReleaseTypeNotificationPreferenceCount: number;
     public readonly isReleaseTypeNotificationsEnabled: boolean;
 

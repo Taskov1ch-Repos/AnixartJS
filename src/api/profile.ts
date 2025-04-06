@@ -11,7 +11,8 @@ import {
     IRelease,
     IProfile,
     IResponse,
-    ISubsciptionCountResponse
+    ISubsciptionCountResponse,
+    IVoteRelease
 } from "../types";
 
 /**
@@ -78,7 +79,7 @@ export class Profile {
         return await this.client.call<ISubsciptionCountResponse>({ path: `/channel/subscription/count`, ...options });
     }
 
-    public async getVotesReleases(id: number, page: number, sort: number = 1, options?: IBaseApiParams): Promise<IPageableResponse<IProfileShort>> {
-        return await this.client.call<IPageableResponse<IProfileShort>>({ path: `/profile/vote/release/voted/${id}/${page}`, queryParams: {sort}, ...options})
+    public async getVotesReleases(id: number, page: number, sort: number = 1, options?: IBaseApiParams): Promise<IPageableResponse<IVoteRelease>> {
+        return await this.client.call<IPageableResponse<IVoteRelease>>({ path: `/profile/vote/release/voted/${id}/${page}`, queryParams: {sort}, ...options})
     }
 }

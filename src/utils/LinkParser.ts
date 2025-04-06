@@ -79,6 +79,7 @@ export class KodikParser {
         const videoInfoHash = urlResponse.match(/videoInfo.hash\s=\s'(?<hash>.*?)';/is)?.groups?.hash;
         const videoInfoId = urlResponse.match(/videoInfo.id\s=\s'(?<id>.*?)';/is)?.groups?.id;
         const videoInfoType = urlResponse.match(/videoInfo.type\s=\s'(?<type>.*?)';/)?.groups?.type;
+        const validKodikUrl = new RegExp(/\/\/(get|cloud)\.kodik-storage\.com\/useruploads\/.*?\/.*?\/(240|360|480|720|1080)\.mp4:hls:manifest.m3u8/s);
 
         if (!videoInfoHash || !videoInfoId || !videoInfoType) return null;
 
@@ -100,14 +101,16 @@ export class KodikParser {
 
         for (const [, sources] of Object.entries(directLinks.links)) {
           for (const source of sources) {
+            if (validKodikUrl.test(source.src)) continue;
+
             const decryptedBase64 = source.src.replace(/[a-zA-Z]/g, e => {
-              let eCharCode = e.charCodeAt(0);
-              return String.fromCharCode((eCharCode <= zCharCode ? 90 : 122) >= (eCharCode = eCharCode + 13) ? eCharCode : eCharCode - 26);
-            });
+                let eCharCode = e.charCodeAt(0);
+                return String.fromCharCode((eCharCode <= zCharCode ? 90 : 122) >= (eCharCode = eCharCode + 18) ? eCharCode : eCharCode - 26);
+              });
             source.src = atob(decryptedBase64);
           }
         }
-        
+
         return directLinks.links;
     }
 }

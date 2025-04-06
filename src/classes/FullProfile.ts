@@ -1,13 +1,13 @@
 import { Anixart } from "../client";
 import { BaseProfile } from "./BaseProfile";
-import { IProfile, IRole } from "../types";
+import { IProfile, IRole, IVoteRelease, IWatchDynamics } from "../types";
 import { Release } from "./Release";
 
 export class FullProfile extends BaseProfile {
     public readonly status: string;
     public readonly sponsorshipExpires: number;
     public readonly history: Release[];
-    public readonly votes: Release[];
+    public readonly votes: IVoteRelease[];
     public readonly lastActivityTime: number;
     public readonly registerDate: number;
     public readonly vkPage: string;
@@ -39,7 +39,7 @@ export class FullProfile extends BaseProfile {
     public readonly isReportProcessNotificationsEnabled: boolean;
     public readonly isCommentNotificationsEnabled: boolean;
     public readonly isMyCollectionCommentNotificationsEnabled: boolean;
-    public readonly watchDynamics: any[];
+    public readonly watchDynamics: IWatchDynamics[];
     public readonly ratingScore: number;
     public readonly isPermBanned: boolean;
     public readonly isBlocked: boolean;
@@ -73,7 +73,7 @@ export class FullProfile extends BaseProfile {
         this.status = profile.status;
         this.sponsorshipExpires = profile.sponsorshipExpires;
         this.history = profile.history.map(release => new Release(this.client, release));
-        this.votes = profile.votes.map(release => new Release(this.client, release));
+        this.votes = profile.votes;
         this.lastActivityTime = profile.last_activity_time;
         this.registerDate = profile.register_date;
         this.vkPage = profile.vk_page;

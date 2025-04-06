@@ -105,11 +105,11 @@ export interface IRelease {
     duration: number
     season: number
     broadcast: number
-    screenshots: any[]
+    screenshots: string[]
     comments: ICommentRelease[]
     title_original: string
     title_ru: string
-    title_alt: null
+    title_alt: string
     episodes_released: number
     episodes_total: number
     release_date: string
@@ -147,14 +147,50 @@ export interface IRelease {
     is_viewed: boolean
     is_favorite: boolean
     is_view_blocked: boolean
-    screenshot_images: any[]
+    screenshot_images: string[]
     related_releases: IRelease[]
     recommended_releases: IRelease[]
     episode_last_update: IEpisodeLastUpdate
     comment_per_day_count: number
-    video_banners: any[]
+    video_banners: IVideoBanners[]
     profile_release_type_notification_preference_count: number
     is_release_type_notifications_enabled: boolean
+}
+
+export interface IVoteRelease {
+    translation: string,
+    id: number,
+    broadcast: number,
+    year: string,
+    country: string,
+    duration: number,
+    description: string,
+    image: string,
+    genres: string,
+    studio: string,
+    season: number,
+    note: string | null,
+    author: string,
+    director: string,
+    rating: number,
+    grade: number,
+    status: number,
+    title_original: string,
+    title_ru: string,
+    favorites_count: number,
+    creation_date: number,
+    last_update_date: number,
+    is_deleted: boolean,
+    is_favorite: boolean,
+    is_viewed: boolean,
+    is_play_disabled: boolean,
+    is_adult: boolean,
+    my_vote: number,
+    episodes_released: number,
+    episodes_total: number,
+    release_date: string,
+    age_rating: number,
+    profile_list_status: number,
 }
 
 export interface IVideo {
@@ -182,9 +218,25 @@ export interface IVideo {
 export interface IVideoResponse extends IResponse {
     release: IRelease,
     blocks: IVideo[],
-    streaming_platforms: any[],
+    streaming_platforms: IVideoStreamingPlatform[],
     last_videos: IVideo[],
     can_appeal: boolean
+}
+
+export interface IVideoBanners {
+    name: string,
+    image: string,
+    value: string,
+    action_id: number,
+    is_new: boolean
+}
+
+export interface IVideoStreamingPlatform {
+    id: number,
+    name: string,
+    icon: string,
+    url: string,
+    position: number
 }
 
 export interface IReleaseResponse extends IResponse {

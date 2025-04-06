@@ -118,13 +118,15 @@ export class Anixart{
     
                     case (request.image !== null && request.image !== undefined):
                         const formData = new FormData();
-                        formData.append(request.image.type, new Blob([request.image.stream]), request.image.name);
+                        formData.append(request.image.type, request.image.stream, {
+                            filename: request.image.name
+                        });
     
                         if (request.image.boundary) {
                             formData.setBoundary(request.image.boundary);
                         }
     
-                        headers['Content-Length'] = String(formData);
+                        headers['Content-Length'] = String(formData.getLengthSync());
     
                         requestInit.body = formData.getBuffer();
                         requestInit.headers = formData.getHeaders(headers);
@@ -142,8 +144,8 @@ export class Anixart{
     
             const response = await fetch(url.toString(), requestInit);
             data = await response.text();
-        } catch (error) {
-            throw new Error(`[AnixartJS] Unexpected error: ${error}`);
+        } catch (error: any) {
+            throw new Error(`[AnixartJS] Unexpected error: ${error.stack}`);
         }
 
         if (data.trim() == "") {

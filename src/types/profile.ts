@@ -2,6 +2,7 @@
 
 import { IResponse } from "./response";
 import { IBaseRequestPageable } from "./request";
+import { IRelease, IVoteRelease } from "./release";
 
 export enum BookmarkType {
     Watching = 1,
@@ -41,8 +42,8 @@ export interface IProfile {
     avatar: string
     status: string
     sponsorshipExpires: number
-    history: any[]
-    votes: any[]
+    history: IRelease[]
+    votes: IVoteRelease[]
     last_activity_time: number
     register_date: number
     vk_page: string
@@ -82,7 +83,7 @@ export interface IProfile {
     is_comment_notifications_enabled: boolean
     is_my_collection_comment_notifications_enabled: boolean
     is_verified: boolean
-    watch_dynamics: any[]
+    watch_dynamics: IWatchDynamics[]
     friend_status: number
     rating_score: number
     is_blocked: boolean
@@ -94,6 +95,13 @@ export interface IProfile {
     is_online: boolean
     roles: IRole[]
     badge: IBadge | null
+}
+
+export interface IWatchDynamics {
+    id: number,
+    day: number,
+    count: number,
+    timestamp: number
 }
 
 export interface IRole {

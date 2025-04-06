@@ -1,5 +1,5 @@
 import { Anixart } from "../client";
-import { IFriendRequestResponse, IProfileShort } from "../types";
+import { IFriendRequestResponse, IPageableResponse, IProfileShort, IVoteRelease } from "../types";
 import { Release } from "./Release"; 
 
 export class BaseProfile {
@@ -57,9 +57,9 @@ export class BaseProfile {
         return request
     }
 
-    // public async getVotesReleases(page?: number, sort?: number): Promise<Release[]> {
-    //     const request = await this.client.endpoints.profile.getVotesReleases(this.id, page ?? 0, sort ?? 1);
+    public async getVotesReleases(page?: number, sort?: number): Promise<IPageableResponse<IVoteRelease>> {
+        const request = await this.client.endpoints.profile.getVotesReleases(this.id, page ?? 0, sort ?? 1);
 
-    //     return request.content.map(release => new Release(this.client, release));
-    // }
+        return request;
+    }
 }

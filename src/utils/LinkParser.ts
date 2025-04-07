@@ -137,8 +137,9 @@ export interface AniLibriaFile {
  * Ссылка на файл
  */
 export interface AniLibriaLink {
-    quality: string,
-    url: string
+    [key: string]: {
+        src: string
+    }
 }
 
 /**
@@ -193,8 +194,13 @@ export class AniLibriaParser {
 
                 for (let y of filesMatch!) {
                     let link = y.replace('[', '').split(']');
+                    let buildObj: AniLibriaLink = {};
 
-                    res.file.push({quality: link[0], url: link[1]});
+                    buildObj[link[0].replace("p", "")] = {
+                        src: link[1]
+                    }
+
+                    res.file.push(buildObj);
                 }
 
                 returnedObject.files.push(res);

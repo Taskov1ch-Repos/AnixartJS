@@ -63,6 +63,10 @@ export class Profile {
         return await this.client.call<IFriendRequestResponse>({ path: `/profile/friend/request/remove/${id}`, ...options });
     }
 
+    public async hideFriendRequest(id: number, options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/profile/friend/request/hide/${id}`, ...options });
+    }
+
     public async getAchivement(id: number, options?: IBaseApiParams): Promise<IResponse> {
         return await this.client.call<IResponse>({ path: `/achivement/get/${id}`, ...options });
     }

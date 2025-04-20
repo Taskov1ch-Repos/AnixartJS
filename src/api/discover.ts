@@ -1,13 +1,8 @@
 import { Anixart } from "../client";
 import {
     IPageableResponse,
-    IResponse,
     IBaseApiParams,
-    ICollectionResponse,
     IRelease,
-    ICollection,
-    IReleaseInCollectionRequest,
-    ICollectionCreateRequest,
     ICommentRelease,
     IInterestingRelease
 } from "../types";

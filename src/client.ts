@@ -7,7 +7,7 @@ import { Release } from "./classes/Release";
 import FormData from 'form-data';
 
 const DEFAULT_BASE_URL = 'https://api.anixart.tv';
-const USER_AGENT = "AnixartApp/9.0 BETA 1-24121614 (Android 9; SDK 28; x86_64; ROG ASUS AI2201_B; ru)";
+const USER_AGENT = "AnixartApp/9.0 BETA 3-25021818 (Android 9; SDK 28; x86_64; ROG ASUS AI2201_B; ru)";
 
 export interface IAnixartOptions {
     baseUrl?: string | URL,

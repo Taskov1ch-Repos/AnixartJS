@@ -1,4 +1,3 @@
-import { ReadStream } from "fs";
 import { Anixart } from "../client";
 import {
     IPageableResponse,

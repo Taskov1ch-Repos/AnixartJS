@@ -20,7 +20,8 @@ import {
     IPageableResponse, 
     IResponse,
     IReleaseFilterRequest,
-    IProfileShort
+    IProfileShort,
+    IVideoStreamingPlatform
 } from "../types";
 
 /**
@@ -141,6 +142,10 @@ export class Release {
 
     public async removeFromProfileList(id: number, type: number, options?: IBaseApiParams): Promise<IResponse> {
         return await this.client.call<IResponse>({ path: `/profile/list/delete/${type}/${id}`, ...options});
+    }
+
+    public async getStreaming(id: number, options?: IBaseApiParams): Promise<IPageableResponse<IVideoStreamingPlatform>> {
+        return await this.client.call<IPageableResponse<IVideoStreamingPlatform>>({ path: `/release/streaming/platform/${id}`, ...options});
     }
 
     public async getCommentVotes(id: number, page: number, options?: IBaseApiParams): Promise<IPageableResponse<IProfileShort>> {

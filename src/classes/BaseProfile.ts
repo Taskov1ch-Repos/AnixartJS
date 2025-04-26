@@ -1,6 +1,6 @@
 import { Anixart } from "../client";
 import { IFriendRequestResponse, IPageableResponse, IProfileShort, IVoteRelease } from "../types";
-import { Release } from "./Release"; 
+import { Collection } from "./Collection";
 
 export class BaseProfile {
     public readonly id: number;
@@ -61,5 +61,11 @@ export class BaseProfile {
         const request = await this.client.endpoints.profile.getVotesReleases(this.id, page ?? 0, sort ?? 1);
 
         return request;
+    }
+
+    public async getCollections(page?: number): Promise<Collection[]> {
+        const request = await this.client.endpoints.collection.getUserCollections(this.id, page ?? 0);
+
+        return request.content.map(x => new Collection(this.client, x));
     }
 }

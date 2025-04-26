@@ -18,8 +18,8 @@ import {
 export class Collection {
     public constructor(private readonly client: Anixart) { }
 
-    public async all(page: number, options?: IBaseApiParams): Promise<IPageableResponse<ICollection>> {
-        return await this.client.call<IPageableResponse<ICollection>>({ path: `/collection/all/${page}`, ...options });
+    public async all(page: number, sort: number = 2, options?: IBaseApiParams): Promise<IPageableResponse<ICollection>> {
+        return await this.client.call<IPageableResponse<ICollection>>({ path: `/collection/all/${page}`, queryParams: {sort, previous_page: page - 1}, ...options });
     }
 
     public async info(id: number, options?: IBaseApiParams): Promise<ICollectionResponse> {

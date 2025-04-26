@@ -4,8 +4,8 @@ import { IResponse } from "./response";
 import { IBaseRequestPageable } from "./request";
 
 export interface ICollection {
-    '@id': string;
-    id: string;
+    '@id': number;
+    id: number;
     creator: IProfile;
     title: string;
     description: string;

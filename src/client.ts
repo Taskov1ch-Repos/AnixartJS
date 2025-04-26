@@ -5,6 +5,7 @@ import { Article } from "./classes/Article";
 import { FullProfile } from "./classes/FullProfile";
 import { Release } from "./classes/Release";
 import FormData from 'form-data';
+import { Collection } from "./classes/Collection";
 
 const DEFAULT_BASE_URL = 'https://api.anixart.tv';
 const USER_AGENT = "AnixartApp/9.0 BETA 3-25021818 (Android 9; SDK 28; x86_64; ROG ASUS AI2201_B; ru)";
@@ -61,6 +62,24 @@ export class Anixart{
         const request = await this.endpoints.release.info(id, extended);
 
         return request.release ? new Release(this, request.release) : null;
+    }
+
+    public async getCollectionById(id: number): Promise<Collection | null> {
+        const request = await this.endpoints.collection.info(id);
+
+        return request.collection ? new Collection(this, request.collection) : null
+    }
+
+    public async getFavoriteCollections(page: number): Promise<Collection[]> {
+        const request = await this.endpoints.collection.getCollectionFavorites(page);
+
+        return request.content.map(x => new Collection(this, x));
+    }
+
+    public async getAllCollections(page: number, sort: number = 2): Promise<Collection[]> {
+        const request = await this.endpoints.collection.all(page, sort);
+
+        return request.content.map(x => new Collection(this, x));
     }
 
     public async login(username: string, password: string): Promise<ResponseCode> {

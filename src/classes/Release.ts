@@ -1,5 +1,6 @@
 import { Anixart } from "../client";
 import { BookmarkType, IBaseCommentAddRequest, ICommentRelease, IEpisodeLastUpdate, IRelated, IRelease, IReleaseCategory, IReleaseStatus, IVideoBanners, ResponseCode, Writable } from "../types";
+import { Collection } from "./Collection";
 import { Dubber } from "./Dubber";
 import { ReleaseComment } from "./ReleaseComment";
 
@@ -228,5 +229,21 @@ export class Release {
         }
 
         return request.code
+    }
+
+    public async getCollections(page: number, sort: number = 0): Promise<Collection[]> {
+        const request = await this.client.endpoints.collection.getReleaseInCollection({
+            id: this.id,
+            sort,
+            page
+        });
+
+        return request.content.map(x => new Collection(this.client, x));
+    }
+
+    public async addToCollection(id: number): Promise<ResponseCode> {
+        const request = await this.client.endpoints.collection.addReleaseToCollection(id, this.id);
+
+        return request.code;
     }
 }

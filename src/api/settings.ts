@@ -48,11 +48,11 @@ export class Settings {
     }
 
     public changeEmail(data: IEmailChangeRequest, options?: IBaseApiParams): Promise<IResponse> {
-        return this.client.call<IResponse>({ path: `/profile/preference/email/edit`, queryParams: { current_password: data.password, current: data.oldEmail, new: data.newEmail }, ...options });
+        return this.client.call<IResponse>({ path: `/profile/preference/email/change`, queryParams: { current_password: data.password, current: data.oldEmail, new: data.newEmail }, ...options });
     }
 
     public async changePassword(currentPassword: string, newPassword: string, options?: IBaseApiParams): Promise<IPasswordChangeResponse> {
-        return await this.client.call<IPasswordChangeResponse>({ path: `/profile/preference/password/edit`, queryParams: { current: currentPassword, new: newPassword }, ...options });
+        return await this.client.call<IPasswordChangeResponse>({ path: `/profile/preference/password/change`, queryParams: { current: currentPassword, new: newPassword }, ...options });
     }
 
     public async addBlocklist(id: number, options?: IBaseApiParams): Promise<IResponse> {

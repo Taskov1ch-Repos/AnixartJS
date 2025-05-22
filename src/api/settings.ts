@@ -44,7 +44,7 @@ export class Settings {
     }
 
     public async confirmChangeEmail(currentPassword: string, options?: IBaseApiParams): Promise<IEmailChangeConfirmResponse> {
-        return await this.client.call<IEmailChangeConfirmResponse>({ path: `/profile/preference/email/confirm`, queryParams: { current: currentPassword }, ...options });
+        return await this.client.call<IEmailChangeConfirmResponse>({ path: `/profile/preference/email/change/confirm`, queryParams: { current: currentPassword }, ...options });
     }
 
     public changeEmail(data: IEmailChangeRequest, options?: IBaseApiParams): Promise<IResponse> {

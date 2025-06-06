@@ -7,7 +7,8 @@ import {
     IRelease,
     ICollection,
     IReleaseInCollectionRequest,
-    ICollectionCreateRequest
+    ICollectionCreateRequest,
+    ICollectionComment
 } from "../types";
 
 /**
@@ -71,5 +72,17 @@ export class Collection {
 
     public async deleteCollection(id: number, options?: IBaseApiParams): Promise<IResponse> {
         return await this.client.call<IResponse>({ path: `/collectionMy/delete/${id}`, ...options });
+    }
+
+    public async getComments(id: number, page: number, sort: number, options?: IBaseApiParams): Promise<IPageableResponse<ICollectionComment>> {
+        return await this.client.call<IPageableResponse<ICollectionComment>>({ path: `/collection/comment/all/${id}/${page}`, queryParams: { sort }, ...options });
+    }
+
+    public async getComment(id: number, options?: IBaseApiParams): Promise<IResponse & ICollectionComment> {
+        return await this.client.call<IResponse & ICollectionComment>({ path: `/collection/comment/${id}`, ...options });
+    }
+
+    public async getCommentReplies(id: number, page: number, sort: number, options?: IBaseApiParams): Promise<IPageableResponse<ICollectionComment>> {
+        return await this.client.call<IPageableResponse<ICollectionComment>>({ path: `/collection/comment/replies/${id}/${page}`, queryParams: { sort }, method: "POST", ...options });
     }
 }

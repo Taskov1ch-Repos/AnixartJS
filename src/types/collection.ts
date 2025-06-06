@@ -2,6 +2,7 @@ import { IProfile } from "./profile";
 import { IRelease } from "./release";
 import { IResponse } from "./response";
 import { IBaseRequestPageable } from "./request";
+import { BaseComment } from "../classes/BaseComment";
 
 export interface ICollection {
     '@id': number;
@@ -39,4 +40,8 @@ export interface ICollectionCreateRequest {
     description: string,
     releases: number[],
     is_private: boolean
+}
+
+export interface ICollectionComment extends BaseComment {
+    collection: ICollection
 }

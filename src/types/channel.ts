@@ -162,8 +162,9 @@ export interface IArticle {
     creation_date: number,
     last_update_date: number,
     is_deleted: boolean,
-    under_moderation_reason: string,
+    under_moderation_reason: string | null,
     is_under_moderation: boolean
+    contains_repost_article: boolean
 }
 
 export interface IChannelBlockManageRequest {

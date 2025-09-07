@@ -53,7 +53,7 @@ export interface IProfile {
     discord_page: string
     ban_expires: number
     ban_reason: string
-    ban_note: unknown
+    ban_note: string | null,
     privilege_level: number
     watching_count: number
     plan_count: number
@@ -95,6 +95,29 @@ export interface IProfile {
     is_online: boolean
     roles: IRole[]
     badge: IBadge | null
+    preferred_genres: IPreferredType[],
+    preferred_audiences: IPreferredType[],
+    preferred_themes: IPreferredType[],
+    theme_enabled: boolean,
+    theme_gradient_start_color: string | null,
+    theme_gradient_end_color: string | null,
+    theme_gradient_angle: string | null,
+    theme_icon_res_name: string | null,
+    theme_icon_url: string | null,
+    theme_icon_color: string | null,
+    theme_icon_alpha: number,
+    theme_icon_destiny: string | null,
+    theme_icon_size: string | null,
+    theme_animation_enabled: boolean,
+    theme_animation_speed: string | null,
+    theme_background_url: string | null,
+    theme_background_mode: string | null,
+    theme_background_alpha: number | null,
+}
+
+export interface IPreferredType {
+    name: string,
+    percentage: number
 }
 
 export interface IWatchDynamics {

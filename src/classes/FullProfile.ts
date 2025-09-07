@@ -1,6 +1,6 @@
 import { Anixart } from "../client";
 import { BaseProfile } from "./BaseProfile";
-import { IProfile, IRole, IVoteRelease, IWatchDynamics } from "../types";
+import { IPreferredType, IProfile, IRole, IVoteRelease, IWatchDynamics } from "../types";
 import { Release } from "./Release";
 
 export class FullProfile extends BaseProfile {
@@ -49,6 +49,24 @@ export class FullProfile extends BaseProfile {
     public readonly isSocialHidden: boolean;
     public readonly isFriendRequestsDisallowed: boolean;
     public readonly roles: IRole[];
+    public readonly preferred_genres: IPreferredType[];
+    public readonly preferred_audiences: IPreferredType[];
+    public readonly preferred_themes: IPreferredType[];
+    public readonly theme_enabled: boolean;
+    public readonly theme_gradient_start_color: string | null;
+    public readonly theme_gradient_end_color: string | null;
+    public readonly theme_gradient_angle: string | null;
+    public readonly theme_icon_res_name: string | null;
+    public readonly theme_icon_url: string | null;
+    public readonly theme_icon_color: string | null;
+    public readonly theme_icon_alpha: number;
+    public readonly theme_icon_destiny: string | null;
+    public readonly theme_icon_size: string | null;
+    public readonly theme_animation_enabled: boolean;
+    public readonly theme_animation_speed: string | null;
+    public readonly theme_background_url: string | null;
+    public readonly theme_background_mode: string | null;
+    public readonly theme_background_alpha: number | null;
 
     constructor(readonly client: Anixart, profile: IProfile) { 
         super(client, {
@@ -115,5 +133,23 @@ export class FullProfile extends BaseProfile {
         this.isFriendRequestsDisallowed = profile.is_friend_requests_disallowed;
         this.roles = profile.roles;
         this.isPermBanned = profile.is_perm_banned;
+        this.preferred_genres = profile.preferred_genres;
+        this.preferred_audiences = profile.preferred_audiences;
+        this.preferred_themes = profile.preferred_themes;
+        this.theme_enabled = profile.theme_enabled;
+        this.theme_gradient_start_color = profile.theme_gradient_start_color;
+        this.theme_gradient_end_color = profile.theme_gradient_end_color;
+        this.theme_gradient_angle = profile.theme_gradient_angle;
+        this.theme_icon_res_name = profile.theme_icon_res_name;
+        this.theme_icon_url = profile.theme_icon_url;
+        this.theme_icon_color = profile.theme_icon_color; 
+        this.theme_icon_alpha = profile.theme_icon_alpha;
+        this.theme_icon_destiny = profile.theme_icon_destiny;
+        this.theme_icon_size = profile.theme_icon_size;
+        this.theme_animation_enabled = profile.theme_animation_enabled;
+        this.theme_animation_speed = profile.theme_animation_speed;
+        this.theme_background_url = profile.theme_background_url;
+        this.theme_background_mode = profile.theme_background_mode;
+        this.theme_background_alpha = profile.theme_background_alpha;
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "anixartjs",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Anixart API Wrapper for NodeJS",
   "type": "commonjs",
   "main": "dist/index.js",

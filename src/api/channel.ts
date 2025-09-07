@@ -116,7 +116,7 @@ export class Channel {
     }
 
     public async uploadArticleImage(media_token: string, file: Buffer, options?: IBaseApiParams): Promise<IArticleUploadFileResponse> {
-        return await this.client.call<IArticleUploadFileResponse>({ path: `/content/upload`, method: "POST", image: {stream: file, name: Utils.generateTempFileName(), type: "file"}, bearer: media_token, customBaseUrl: "https://editor.anixart.tv",...options });
+        return await this.client.call<IArticleUploadFileResponse>({ path: `/content/upload`, method: "POST", image: {stream: file, name: Utils.generateTempFileName(), type: "file"}, bearer: media_token, customBaseUrl: "https://editor.anixsekai.com",...options });
     }
 
     public async uploadChannelAvatar(id: number, file: Buffer, options?: IBaseApiParams): Promise<IUrlResponse> {
@@ -124,7 +124,7 @@ export class Channel {
     }
 
     public async generateEmbedData(type: "youtube" | "vk" | "link", media_token: string, link: string, options?: IBaseApiParams): Promise<IEmbedData> {
-        let request = await this.client.call<IEmbedData>({ path: `/embed/${type}`, customBaseUrl: "https://editor.anixart.tv", bearer: media_token, queryParams: {url: link},  ...options });
+        let request = await this.client.call<IEmbedData>({ path: `/embed/${type}`, customBaseUrl: "https://editor.anixsekai.com", bearer: media_token, queryParams: {url: link},  ...options });
         
         request.url = link;
         

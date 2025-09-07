@@ -15,7 +15,7 @@ export class BaseArticle {
     public readonly voteCount: number;
     public readonly creationDate: Date;
     public readonly lastUpdateDate: Date;
-    public readonly underModerationReason: string;
+    public readonly underModerationReason: string | null;
     public readonly isUnderModeration: boolean;
     public readonly author: FullProfile | null;
 

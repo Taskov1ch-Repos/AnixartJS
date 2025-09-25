@@ -8,6 +8,7 @@ import {
     IBaseApiParams
 } from "../types";
 
+//TODO: Удаление конкретных уведомлений
 export class Notification {
     public constructor(private readonly client: Anixart) { }
 
@@ -39,7 +40,7 @@ export class Notification {
         return await this.client.call<IPageableResponse<any>>({ path: `/notification/collectionComments/${page}`, ...options });
     }
 
-    public async removeNotifications(options?: IBaseApiParams): Promise<IResponse> {
-        return await this.client.call<IResponse>({ path: `/notification/remove/all`, ...options });
+    public async removeAllNotifications(options?: IBaseApiParams): Promise<IResponse> {
+        return await this.client.call<IResponse>({ path: `/notification/delete/all`, ...options });
     }
 }

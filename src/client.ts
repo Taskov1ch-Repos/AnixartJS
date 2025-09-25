@@ -8,11 +8,19 @@ import FormData from 'form-data';
 import { Collection } from "./classes/Collection";
 
 const DEFAULT_BASE_URL = 'https://api-s.anixsekai.com';
-const USER_AGENT = "AnixartApp/9.0 BETA 3-25021818 (Android 9; SDK 28; x86_64; ROG ASUS AI2201_B; ru)";
+const USER_AGENT = "AnixartApp/9.0 BETA 7-25082901 (Android 9; SDK 28; x86_64; ROG ASUS AI2201_B; ru)";
+const API_ENDPOINTS_URL = 'https://raw.githubusercontent.com/AnixHelper/pages/refs/heads/main/urls.json'
 
 export interface IAnixartOptions {
     baseUrl?: string | URL,
     token?: string
+}
+
+export interface IAnixartEndpointUrls {
+    [key: string]: {
+        api_url: string,
+        should_use_mirror_urls: boolean
+    }
 }
 
 /**
@@ -26,6 +34,10 @@ export class Anixart{
     constructor(options: IAnixartOptions) {
         this.baseUrl = options?.baseUrl ?? DEFAULT_BASE_URL;
         this.token = options?.token ?? null;
+    }
+
+    public static async getEndpointUrls(): Promise<IAnixartEndpointUrls> {
+        return await (await fetch(API_ENDPOINTS_URL)).json();
     }
 
     public async getChannelById(id: number): Promise<Channel | null> {

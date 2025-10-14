@@ -1,5 +1,5 @@
 import { Anixart } from '../client';
-import { ICommentRelease, Writable, ResponseCode, VoteType } from '../types';
+import { ICommentRelease, Writable, DefaultResult, VoteType, CommentDeleteResult, CommentEditResult } from '../types';
 import { BaseComment } from './BaseComment';
 import { BaseProfile } from './BaseProfile';
 import { Release } from './Release';
@@ -28,26 +28,26 @@ export class ReleaseComment extends BaseComment {
             return request.content.map(comment => new ReleaseComment(this.client, comment));
         }
     
-        public async delete(): Promise<ResponseCode> {
+        public async delete(): Promise<DefaultResult | CommentDeleteResult> {
             const request = await this.client.endpoints.release.removeComment(this.id);
 
             return request.code;
         }
     
-        public async setVote(type: VoteType): Promise<ResponseCode> {
+        public async setVote(type: VoteType): Promise<DefaultResult> {
             const request = await this.client.endpoints.release.voteComment(this.id, type);
     
-            if (request.code == 0) {
+            if (request.code == DefaultResult.Ok) {
                 this.writeProperties("vote", type == this.vote ? 0 : type);
             }
     
             return request.code;
         }
 
-        public async edit(content: string, isSpoiler: boolean) {
+        public async edit(content: string, isSpoiler: boolean): Promise<DefaultResult | CommentEditResult> {
             const request = await this.client.endpoints.release.editComment(this.id, content, isSpoiler);
 
-            if (request.code == 0) {
+            if (request.code == DefaultResult.Ok) {
                 this.writeProperties("message", content);
                 this.writeProperties("isSpoiler", isSpoiler);
             }

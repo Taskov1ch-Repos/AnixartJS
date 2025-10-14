@@ -1,5 +1,5 @@
 import { Auth, Settings, Profile, Release, Notification, Collection, Discover, Channel, Feed } from "./api";
-import { IBaseApiParams, IScheduleResponse, ITypeResponse } from "./types";
+import { IBaseApiParams, IScheduleResponse, ITypeResponse, DefaultResult } from "./types";
 import { Anixart } from "./client";
 
 export class Endpoints {
@@ -26,10 +26,10 @@ export class Endpoints {
     }
 
     public async getSchedule(options?: IBaseApiParams): Promise<IScheduleResponse> {
-        return await this.client.call<IScheduleResponse>({ path: '/schedule', ...options });
+        return await this.client.call<DefaultResult, IScheduleResponse>({ path: '/schedule', ...options });
     }
 
     public async getTypes(options?: IBaseApiParams): Promise<ITypeResponse> {
-        return await this.client.call<ITypeResponse>({ path: '/type/all', ...options });
+        return await this.client.call<DefaultResult, ITypeResponse>({ path: '/type/all', ...options });
     }
 }

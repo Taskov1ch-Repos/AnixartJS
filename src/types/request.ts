@@ -1,5 +1,3 @@
-import { ReadStream } from "fs"
-
 export interface IBaseRequest {
     path: string,
     json?: object,

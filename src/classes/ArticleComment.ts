@@ -1,6 +1,6 @@
 import { Anixart } from "../client";
 import { BaseComment } from "./BaseComment";
-import { IArticleComment, ResponseCode, VoteType, Writable } from "../types";
+import { IArticleComment, DefaultResult, VoteType, Writable, CommentDeleteResult } from "../types";
 import { Article } from "./Article";
 import { BaseProfile } from "./BaseProfile";
 
@@ -28,16 +28,16 @@ export class ArticleComment extends BaseComment {
         return request.content.map(comment => new ArticleComment(this.client, comment));
     }
 
-    public async delete(): Promise<ResponseCode> {
+    public async delete(): Promise<DefaultResult | CommentDeleteResult> {
         const request = await this.client.endpoints.channel.removeArticleComment(this.id);
 
         return request.code;
     }
 
-    public async setVote(type: VoteType): Promise<ResponseCode> {
+    public async setVote(type: VoteType): Promise<DefaultResult> {
         const request = await this.client.endpoints.channel.voteCommentArticle(this.id, type);
 
-        if (request.code == 0) {
+        if (request.code == DefaultResult.Ok) {
             this.writeProperties("vote", type == this.vote ? 0 : type);
         }
 

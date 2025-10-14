@@ -1,4 +1,4 @@
-import { IPageableResponse, IResponse, IBaseComment } from './response'
+import { IPageableResponse, IResponse, IBaseComment, CommentAddResult } from './response'
 import { IProfileShort, IProfile } from './profile'
 import { IBaseRequestPageable } from './request'
 
@@ -20,6 +20,10 @@ export enum ReleaseStatus {
     Finished = 1,
     Airing = 2,
     Announced = 3
+}
+
+export enum ReleaseVideoResult {
+    InvalidReleaseId = 2
 }
 
 export interface ICommentRepliesRequest extends IBaseRequestPageable {
@@ -215,7 +219,7 @@ export interface IVideo {
     favorites_count: number
 }
 
-export interface IVideoResponse extends IResponse {
+export interface IVideoResponse extends IResponse<ReleaseVideoResult> {
     release: IRelease,
     blocks: IVideo[],
     streaming_platforms: IVideoStreamingPlatform[],
@@ -248,7 +252,7 @@ export interface ICommentReleaseRequest extends IBaseRequestPageable {
     sort: number
 }
 
-export interface ICommentReleaseResponse extends IResponse {
+export interface ICommentReleaseResponse extends IResponse<CommentAddResult> {
     comment: ICommentRelease
 }
 

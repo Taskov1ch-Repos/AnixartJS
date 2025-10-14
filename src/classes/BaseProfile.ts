@@ -1,5 +1,5 @@
 import { Anixart } from "../client";
-import { IFriendRequestResponse, IPageableResponse, IProfileShort, IVoteRelease } from "../types";
+import { IFriendRequestResponse, IPageableResponse, IProfileShort, IVoteRelease, RemoveFriendRequestResult } from "../types";
 import { Collection } from "./Collection";
 
 export class BaseProfile {
@@ -51,7 +51,7 @@ export class BaseProfile {
         return request;
     }
 
-    public async removeFriendRequest(): Promise<IFriendRequestResponse> {
+    public async removeFriendRequest(): Promise<IFriendRequestResponse<RemoveFriendRequestResult>> {
         const request = await this.client.endpoints.profile.removeFriendRequest(this.id);
 
         return request

@@ -1,5 +1,5 @@
 import { Anixart } from "../client";
-import { ICollection, ResponseCode, Writable } from "../types";
+import { ICollection, DefaultResult, Writable, FavoriteCollectionAddResult, FavoriteCollectionDeleteResult, ReleaseAddCollectionResult, CollectionDeleteResult } from "../types";
 import { FullProfile } from "./FullProfile";
 import { Release } from "./Release";
 
@@ -46,25 +46,25 @@ export class Collection {
         return request.content.map(x => new Release(this.client, x));
     }
 
-    public async addToFavorite(): Promise<ResponseCode> {
+    public async addToFavorite(): Promise<DefaultResult | FavoriteCollectionAddResult> {
         const request = await this.client.endpoints.collection.addCollectionFavorite(this.id);
 
         return request.code;
     }
 
-    public async removeInFavorite(): Promise<ResponseCode> {
+    public async removeInFavorite(): Promise<DefaultResult | FavoriteCollectionDeleteResult> {
         const request = await this.client.endpoints.collection.removeCollectionFavorite(this.id);
 
         return request.code;
     }
 
-    public async addRelease(id: number): Promise<ResponseCode> {
+    public async addRelease(id: number): Promise<DefaultResult | ReleaseAddCollectionResult> {
         const request = await this.client.endpoints.collection.addReleaseToCollection(this.id, id);
 
         return request.code;
     }
 
-    public async delete(): Promise<ResponseCode> {
+    public async delete(): Promise<DefaultResult | CollectionDeleteResult> {
         const request = await this.client.endpoints.collection.deleteCollection(this.id);
 
         return request.code;
@@ -78,6 +78,6 @@ export class Collection {
             is_private: isPrivate
         })
 
-        return request.code == 0 ? new Collection(this.client, request.collection) : null;
+        return request.code == DefaultResult.Ok ? new Collection(this.client, request.collection) : null;
     }
 }

@@ -1,6 +1,6 @@
 import { Channel } from "./Channel";
 import { Anixart } from "../client";
-import { IArticle, ResponseCode, Writable } from "../types";
+import { IArticle, DefaultResult, Writable, ArticleSuggestionDeleteResult } from "../types";
 import { BaseArticle } from "./BaseArticle";
 import { Article } from "./Article";
 
@@ -25,10 +25,10 @@ export class SuggestionArticle extends BaseArticle {
     public async publish(): Promise<number | null> {
         const request = await this.client.endpoints.channel.publishArticleSuggestion(this.id);
 
-        return request.code == 0 ? request.article_id : null;
+        return request.code == DefaultResult.Ok ? request.article_id : null;
     }
 
-    public async delete(): Promise<ResponseCode> {
+    public async delete(): Promise<DefaultResult | ArticleSuggestionDeleteResult> {
         const request = await this.client.endpoints.channel.removeArticleSuggestion(this.id);
 
         return request.code;

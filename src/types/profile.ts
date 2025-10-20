@@ -3,6 +3,7 @@
 import { IResponse } from "./response";
 import { IBaseRequestPageable } from "./request";
 import { IRelease, IVoteRelease } from "./release";
+import { SocialEditResult } from "./settings";
 
 export enum BookmarkType {
     Watching = 1,
@@ -28,8 +29,6 @@ export interface IBookmarkRequest extends IBaseRequestPageable {
     sort: BookmarkSortType,
     filter: number
 }
-
-
 
 export interface IProfileToken {
     id: string
@@ -160,8 +159,8 @@ export interface IFriendsRequest extends IBaseRequestPageable {
     id: number
 }
 
-export interface IFriendRequestResponse extends IResponse {
-    friend_status: number | null
+export interface IFriendRequestResponse<T extends number = SendFriendRequestResult> extends IResponse {
+    friend_status: T | null
 }
 
 export interface IBadge {
@@ -186,4 +185,25 @@ export interface ISocialResponse extends IResponse {
     inst_page: string,
     tt_page: string,
     discord_page: string
+}
+
+export enum SendFriendRequestResult {
+    RequestConfirmed = 2,
+    RequestSent = 3,
+    ProfileWasBlocked = 4,
+    MyProfileWasBlocked = 5,
+    FriendLimitReached = 6,
+    TargetFriendLimitReached = 7,
+    TargetFriendRequestsDisallowed = 8,
+    FriendRequestLimitReached = 9
+}
+
+export enum RemoveFriendRequestResult {
+    RequestRemoved = 2,
+    FriendshipRemoved = 3
+}
+
+export enum AchivementResult {
+    AlreadyGranted = 2,
+    AchivementNotFound = 3
 }

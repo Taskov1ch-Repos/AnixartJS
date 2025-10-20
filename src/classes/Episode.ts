@@ -1,5 +1,5 @@
 import { Anixart } from '../client';
-import { IEpisode, IRelease, ISource, ResponseCode } from '../types';
+import { IEpisode, IRelease, ISource, DefaultResult } from '../types';
 import { Source } from './Source';
 
 export class Episode {
@@ -27,7 +27,7 @@ export class Episode {
         this.isWatched = episode.is_watched;
     }
 
-    public async setWatched(isWatched: boolean): Promise<ResponseCode> {
+    public async setWatched(isWatched: boolean): Promise<DefaultResult> {
         const request = isWatched ? 
         await this.client.endpoints.release.markEpisodeAsWatched(this.source.dubber.release.id, this.source.id, this.position) 
         : await this.client.endpoints.release.unmarkEpisodeAsWatched(this.source.dubber.release.id, this.source.id, this.position);
@@ -35,7 +35,7 @@ export class Episode {
         return request.code;
     }
 
-    public async addToHistory(): Promise<ResponseCode> {
+    public async addToHistory(): Promise<DefaultResult> {
         const request = await this.client.endpoints.release.addToHistory(this.source.dubber.release.id, this.source.id, this.position);
 
         return request.code;

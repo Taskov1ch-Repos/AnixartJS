@@ -1,4 +1,4 @@
-import { IPageableResponse, IResponse, IBaseComment } from './response'
+import { IPageableResponse, IResponse, IBaseComment, CommentAddResult } from './response'
 import { IProfileShort, IProfile } from './profile'
 import { IBaseRequestPageable } from './request'
 
@@ -20,6 +20,15 @@ export enum ReleaseStatus {
     Finished = 1,
     Airing = 2,
     Announced = 3
+}
+
+export enum ReleaseVideoResult {
+    InvalidReleaseId = 2
+}
+
+export enum BookmarkExportResult {
+    InvalidProfileLists = 2,
+    InvalidExtraFields = 3
 }
 
 export interface ICommentRepliesRequest extends IBaseRequestPageable {
@@ -215,7 +224,7 @@ export interface IVideo {
     favorites_count: number
 }
 
-export interface IVideoResponse extends IResponse {
+export interface IVideoResponse extends IResponse<ReleaseVideoResult> {
     release: IRelease,
     blocks: IVideo[],
     streaming_platforms: IVideoStreamingPlatform[],
@@ -248,7 +257,7 @@ export interface ICommentReleaseRequest extends IBaseRequestPageable {
     sort: number
 }
 
-export interface ICommentReleaseResponse extends IResponse {
+export interface ICommentReleaseResponse extends IResponse<CommentAddResult> {
     comment: ICommentRelease
 }
 
@@ -314,4 +323,27 @@ export interface IInterestingRelease {
     type: number,
     action: string,
     is_hidden: boolean
+}
+
+export interface ILastEpisodeUpdate {
+    last_episode_update_date: number,
+    last_episode_update_name: string,
+    last_episode_source_update_id: number,
+    last_episode_source_update_name: string,
+    last_episode_type_update_id: number,
+    lastEpisodeTypeUpdateName: string
+}
+
+export interface IExportBookmarksResponse extends IResponse<BookmarkExportResult> {
+    releases: IExportRelease[]
+}
+
+export interface IExportRelease {
+    id: number,
+    title_alt: string,
+    title_ru: string,
+    title_original: string,
+    your_vote: number | null,
+    profile_list_status: number,
+    is_favorite: boolean
 }

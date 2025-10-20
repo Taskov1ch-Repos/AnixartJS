@@ -1,5 +1,5 @@
 import { Anixart } from "../client";
-import { IChannel, IChannelBlockInfo, IChannelBlockManageRequest, IChannelCreateRequest, IUrlResponse, ResponseCode, Writable } from "../types";
+import { IChannel, IChannelBlockInfo, IChannelBlockManageRequest, IChannelCreateRequest, IUrlResponse, DefaultResult, Writable, ChannelSubscribeResult, ChannelUnsubscribeResult, ChannelBlockResult } from "../types";
 import { ArticleBuilder } from "../utils/ArticleBuilder";
 import { SuggestionArticle } from "./SuggestionArticle";
 import { Article } from "./Article";
@@ -77,20 +77,20 @@ export class Channel {
         return request.article ? new Article(this.client, request.article) : null;
     }
 
-    public async subscribe(): Promise<ResponseCode> {
+    public async subscribe(): Promise<DefaultResult | ChannelSubscribeResult> {
         const request = await this.client.endpoints.channel.subscribe(this.id);
 
-        if (request.code == 0) {
+        if (request.code == DefaultResult.Ok) {
             this.writeProperties("isSubscribed", true)
         }
 
         return request.code;
     }
 
-    public async unsubscribe(): Promise<ResponseCode> {
+    public async unsubscribe(): Promise<DefaultResult | ChannelUnsubscribeResult> {
         const request = await this.client.endpoints.channel.unsubscribe(this.id);
 
-        if (request.code == 0) {
+        if (request.code == DefaultResult.Ok) {
             this.writeProperties("isSubscribed", false)
         }
 
@@ -100,7 +100,7 @@ export class Channel {
     public async setAvatar(file: Buffer): Promise<this> {
         const request = await this.client.endpoints.channel.uploadChannelAvatar(this.id, file);
 
-        if (request.code == 0) {
+        if (request.code == DefaultResult.Ok) {
             this.writeProperties("channelAvatar", request.url);
         }
 
@@ -110,7 +110,7 @@ export class Channel {
     public async setCover(file: Buffer): Promise<this> {
         const request = await this.client.endpoints.channel.uploadChannelCover(this.id, file);
 
-        if (request.code == 0) {
+        if (request.code == DefaultResult.Ok) {
             this.writeProperties("channelCover", request.url);
         }
     
@@ -138,10 +138,10 @@ export class Channel {
     public async createArticleSuggestion(data: ArticleBuilder): Promise<SuggestionArticle | null> {
         const request = await this.client.endpoints.channel.createArticleSuggestion(this.id, data.returnBuildAricle());
 
-        return request.code == 0 ? new SuggestionArticle(this.client, request.article, this) : null;
+        return request.code == DefaultResult.Ok ? new SuggestionArticle(this.client, request.article, this) : null;
     }
 
-    public async manageBlocklist(profile: BaseProfile | FullProfile | number, data: Omit<IChannelBlockManageRequest, "target_profile_id">): Promise<ResponseCode> {
+    public async manageBlocklist(profile: BaseProfile | FullProfile | number, data: Omit<IChannelBlockManageRequest, "target_profile_id">): Promise<DefaultResult | ChannelBlockResult> {
         const request = await this.client.endpoints.channel.manageChannelBlocklist(this.id, {
             target_profile_id: typeof(profile) == "number" ? profile : profile.id,
             ...data

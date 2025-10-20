@@ -30,7 +30,7 @@ export interface IBadgesResponse extends IPageableResponse<IBadge> {
     profile: IProfile
 }
 
-export interface IEmailChangeConfirmResponse extends IResponse {
+export interface IEmailChangeConfirmResponse extends IResponse<ChangeEmailConfirmResult> {
     emailHint: string
 }
 
@@ -55,6 +55,44 @@ export interface INewLogin {
     timestamp: number
 }
 
+export enum SocialEditResult {
+    InvalidVk = 2,
+    InvalidTelegram = 3,
+    InvalidInstagram = 4,
+    InvalidTiktok = 5,
+    InvalidDiscord = 6
+}
+
+export enum ChangeLoginResult {
+    InvalidLogin = 2,
+    LoginAlreadyTaken = 3,
+    TimeLimit = 4
+}
+
+export enum BlocklistAddResult {
+    AlreadyInBlocklist = 2
+}
+
+export enum ChangeEmailResult {
+    InvalidEmail = 2,
+    InvalidCurrentEmail = 3,
+    EmailAlreadyTaken = 4
+}
+
+export enum ChangeEmailConfirmResult {
+    InvalidPassword = 2
+}
+
+export enum ChangePasswordResult {
+    InvalidPassword = 2,
+    InvalidCurrentPassword = 3
+}
+
+export enum PasswordChangeResult {
+    InvalidPassword = 2,
+    InvalidCurrentPassword = 3
+}
+
 export enum PrivacyState {
     All = 0,
     OnlyFriends = 1,
@@ -66,6 +104,6 @@ export enum PrivacyFriendRequestState {
     OnlyMe = 1
 }
 
-export interface IPasswordChangeResponse extends IResponse {
+export interface IPasswordChangeResponse extends IResponse<ChangePasswordResult> {
     token: string
 }

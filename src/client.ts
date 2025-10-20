@@ -1,4 +1,4 @@
-import { IBaseRequest, IResponse, ResponseCode  } from "./types";
+import { DefaultResult, IBaseRequest, IResponse, LoginResult } from "./types";
 import { Endpoints } from "./endpoints";
 import { Channel } from "./classes/Channel";
 import { Article } from "./classes/Article";
@@ -94,7 +94,7 @@ export class Anixart{
         return request.content.map(x => new Collection(this, x));
     }
 
-    public async login(username: string, password: string): Promise<ResponseCode> {
+    public async login(username: string, password: string): Promise<LoginResult | DefaultResult> {
         const request = await this.endpoints.auth.signIn({
             login: username,
             password
@@ -105,7 +105,7 @@ export class Anixart{
         return request.code;
     }
 
-    public async call<T extends IResponse>(request: IBaseRequest): Promise<T> {
+    public async call<TCode extends number, T extends IResponse<TCode>>(request: IBaseRequest): Promise<T> {
         let data: string;
 
         try {

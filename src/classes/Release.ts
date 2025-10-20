@@ -1,5 +1,5 @@
 import { Anixart } from "../client";
-import { BookmarkType, IBaseCommentAddRequest, ICommentRelease, IEpisodeLastUpdate, IRelated, IRelease, IReleaseCategory, IReleaseStatus, IVideoBanners, ResponseCode, Writable } from "../types";
+import { BookmarkType, IBaseCommentAddRequest, ICommentRelease, IEpisodeLastUpdate, IRelated, IRelease, IReleaseCategory, IReleaseStatus, IVideoBanners, DefaultResult, Writable, ReleaseAddCollectionResult } from "../types";
 import { Collection } from "./Collection";
 import { Dubber } from "./Dubber";
 import { ReleaseComment } from "./ReleaseComment";
@@ -159,38 +159,38 @@ export class Release {
         return request.types.map(dubber => new Dubber(this.client, dubber, this));
     }
 
-    public async removeFromHistory(): Promise<ResponseCode> {
+    public async removeFromHistory(): Promise<DefaultResult> {
         const request = await this.client.endpoints.release.removeFromHistory(this.id);
 
         return request.code;
     }
 
-    public async setFavorite(favorite: boolean): Promise<ResponseCode> {
+    public async setFavorite(favorite: boolean): Promise<DefaultResult> {
         const request = favorite ?
         await this.client.endpoints.release.addFavorite(this.id) :
         await this.client.endpoints.release.removeFavorite(this.id);
 
-        if (request.code == 0) {
+        if (request.code == DefaultResult.Ok) {
             this.writeProperties("isFavorite", favorite);
         }
 
         return request.code;
     }
 
-    public async addToList(type: BookmarkType): Promise<ResponseCode> {
+    public async addToList(type: BookmarkType): Promise<DefaultResult> {
         const request = await this.client.endpoints.release.addToProfileList(this.id, type);
 
-        if (request.code == 0) {
+        if (request.code == DefaultResult.Ok) {
             this.writeProperties("profileListStatus", type);
         }
 
         return request.code;
     }
 
-    public async removeFromList(type?: BookmarkType): Promise<ResponseCode> {
+    public async removeFromList(type?: BookmarkType): Promise<DefaultResult> {
         const request = await this.client.endpoints.release.removeFromProfileList(this.id, type ? type : this.profileListStatus);
         
-        if (request.code == 0) {
+        if (request.code == DefaultResult.Ok) {
             this.writeProperties("profileListStatus", null);
         }
 
@@ -200,30 +200,30 @@ export class Release {
     public async getRelatedReleases(page: number = 0): Promise<Release[] | null> {
         const request = await this.client.endpoints.release.getRelatedReleases(this.related.id, page);
 
-        return request.code == 0 ? request.content.map(release => new Release(this.client, release)) : null;
+        return request.code == DefaultResult.Ok ? request.content.map(release => new Release(this.client, release)) : null;
     }
 
     public async getComments(page: number = 0, sort: number = 0): Promise<ReleaseComment[] | null> {
         const request = await this.client.endpoints.release.getComments({ page, sort, id: this.id });
 
-        return request.code == 0 ? request.content.map(comment => new ReleaseComment(this.client, comment, this)) : null;
+        return request.code == DefaultResult.Ok ? request.content.map(comment => new ReleaseComment(this.client, comment, this)) : null;
     }
 
     public async addComment(data: IBaseCommentAddRequest): Promise<ReleaseComment | null> {
         const request = await this.client.endpoints.release.addComment(this.id, data);
 
-        if (request.code == 0) {
+        if (request.code == DefaultResult.Ok) {
             this.writeProperties("commentCount", this.commentCount + 1)
             this.writeProperties("commentsCount", this.commentsCount + 1)
         }
 
-        return request.code == 0 ? new ReleaseComment(this.client, request.comment, this) : null;
+        return request.code == DefaultResult.Ok ? new ReleaseComment(this.client, request.comment, this) : null;
     }
 
-    public async addVote(vote: 1 | 2 | 3 | 4 | 5): Promise<ResponseCode> {
+    public async addVote(vote: 1 | 2 | 3 | 4 | 5): Promise<DefaultResult> {
         const request = await this.client.endpoints.release.addVote(this.id, vote);
 
-        if (request.code == 0) {
+        if (request.code == DefaultResult.Ok) {
             this.writeProperties("voteCount", this.voteCount + 1);
             this.writeProperties("yourVote", vote);
         }
@@ -241,7 +241,7 @@ export class Release {
         return request.content.map(x => new Collection(this.client, x));
     }
 
-    public async addToCollection(id: number): Promise<ResponseCode> {
+    public async addToCollection(id: number): Promise<DefaultResult | ReleaseAddCollectionResult> {
         const request = await this.client.endpoints.collection.addReleaseToCollection(id, this.id);
 
         return request.code;

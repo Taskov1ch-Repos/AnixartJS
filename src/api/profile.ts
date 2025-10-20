@@ -16,7 +16,9 @@ import {
     DefaultResult,
     SendFriendRequestResult,
     RemoveFriendRequestResult,
-    AchivementResult
+    AchivementResult,
+    ISocialResponse,
+    IExportBookmarksResponse
 } from "../types";
 
 /**
@@ -89,7 +91,23 @@ export class Profile {
         return await this.client.call<DefaultResult, ISubsciptionCountResponse>({ path: `/channel/subscription/count`, ...options });
     }
 
-    public async getVotesReleases(id: number, page: number, sort: number = 1, options?: IBaseApiParams): Promise<IPageableResponse<IVoteRelease>> {
+    public async getVotedReleases(id: number, page: number, sort: number = 1, options?: IBaseApiParams): Promise<IPageableResponse<IVoteRelease>> {
         return await this.client.call<DefaultResult, IPageableResponse<IVoteRelease>>({ path: `/profile/vote/release/voted/${id}/${page}`, queryParams: {sort}, ...options})
+    }
+
+    public async getSocials(id: number, options: IBaseApiParams): Promise<ISocialResponse> {
+        return await this.client.call<DefaultResult, ISocialResponse>({ path: `/profile/social/${id}`, ...options });
+    }
+
+    public async getUnvotedReleases(page: number | "last" = "last", options: IBaseApiParams): Promise<IPageableResponse<IRelease>> {
+        return await this.client.call<DefaultResult, IPageableResponse<IRelease>>({ path: `/profile/vote/release/unvoted/${page}`, ...options });
+    }
+
+    public async getRoleProfiles(id: number, page: number, options?: IBaseApiParams): Promise<IPageableResponse<IProfileShort>> {
+        return await this.client.call<DefaultResult, IPageableResponse<IProfileShort>>({ path: `/role/all/${page}/${id}`, ...options });
+    }
+
+    public async exportBookmarks(listIds: Array<number>, sort?: number, options?: IBaseApiParams): Promise<IExportBookmarksResponse> {
+        return await this.client.call<DefaultResult, IExportBookmarksResponse>({ path: "/export/bookmarks", json: { bookmarksExportProfileLists: listIds }, queryParams: {sort}, ...options })
     }
 }

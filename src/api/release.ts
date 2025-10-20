@@ -26,7 +26,8 @@ import {
     CommentAddResult,
     CommentDeleteResult,
     CommentEditResult,
-    ReleaseVideoResult
+    ReleaseVideoResult,
+    ILastEpisodeUpdate
 } from "../types";
 
 /**
@@ -155,5 +156,9 @@ export class Release {
 
     public async getCommentVotes(id: number, page: number, options?: IBaseApiParams): Promise<IPageableResponse<IProfileShort>> {
         return await this.client.call<DefaultResult, IPageableResponse<IProfileShort>>({ path: `/release/comment/votes/${id}/${page}`, ...options})
+    }
+
+    public async getEpisodeUpdates(id: number, page: number, options?: IBaseApiParams): Promise<IPageableResponse<ILastEpisodeUpdate>> {
+        return await this.client.call<DefaultResult, IPageableResponse<ILastEpisodeUpdate>>({ path: `/episode/updates/${id}/${page}`, ...options });
     }
 }

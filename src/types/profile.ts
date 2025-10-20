@@ -30,8 +30,6 @@ export interface IBookmarkRequest extends IBaseRequestPageable {
     filter: number
 }
 
-
-
 export interface IProfileToken {
     id: string
     token: string

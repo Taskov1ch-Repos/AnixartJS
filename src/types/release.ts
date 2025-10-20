@@ -319,3 +319,26 @@ export interface IInterestingRelease {
     action: string,
     is_hidden: boolean
 }
+
+export interface ILastEpisodeUpdate {
+    last_episode_update_date: number,
+    last_episode_update_name: string,
+    last_episode_source_update_id: number,
+    last_episode_source_update_name: string,
+    last_episode_type_update_id: number,
+    lastEpisodeTypeUpdateName: string
+}
+
+export interface IExportBookmarksResponse extends IResponse {
+    releases: IExportRelease[]
+}
+
+export interface IExportRelease {
+    id: number,
+    title_alt: string,
+    title_ru: string,
+    title_original: string,
+    your_vote: number | null,
+    profile_list_status: number,
+    is_favorite: boolean
+}

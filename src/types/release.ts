@@ -26,6 +26,11 @@ export enum ReleaseVideoResult {
     InvalidReleaseId = 2
 }
 
+export enum BookmarkExportResult {
+    InvalidProfileLists = 2,
+    InvalidExtraFields = 3
+}
+
 export interface ICommentRepliesRequest extends IBaseRequestPageable {
     id: number,
     sort: number
@@ -329,7 +334,7 @@ export interface ILastEpisodeUpdate {
     lastEpisodeTypeUpdateName: string
 }
 
-export interface IExportBookmarksResponse extends IResponse {
+export interface IExportBookmarksResponse extends IResponse<BookmarkExportResult> {
     releases: IExportRelease[]
 }
 

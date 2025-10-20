@@ -1,5 +1,5 @@
 import { Anixart } from "../client";
-import { IFriendRequestResponse, IPageableResponse, IProfileShort, IVoteRelease, RemoveFriendRequestResult } from "../types";
+import { IFriendRequestResponse, IPageableResponse, IProfileShort, IRelease, IVoteRelease, RemoveFriendRequestResult } from "../types";
 import { Collection } from "./Collection";
 
 export class BaseProfile {
@@ -57,8 +57,14 @@ export class BaseProfile {
         return request
     }
 
-    public async getVotesReleases(page?: number, sort?: number): Promise<IPageableResponse<IVoteRelease>> {
-        const request = await this.client.endpoints.profile.getVotesReleases(this.id, page ?? 0, sort ?? 1);
+    public async getVotedReleases(page?: number, sort?: number): Promise<IPageableResponse<IVoteRelease>> {
+        const request = await this.client.endpoints.profile.getVotedReleases(this.id, page ?? 0, sort ?? 1);
+
+        return request;
+    }
+
+    public async getUnvotedReleases(page?: number): Promise<IPageableResponse<IRelease>> {
+        const request = await this.client.endpoints.profile.getUnvotedReleases(page ?? "last");
 
         return request;
     }

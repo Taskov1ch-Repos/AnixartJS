@@ -18,7 +18,8 @@ import {
     RemoveFriendRequestResult,
     AchivementResult,
     ISocialResponse,
-    IExportBookmarksResponse
+    IExportBookmarksResponse,
+    BookmarkExportResult
 } from "../types";
 
 /**
@@ -64,7 +65,7 @@ export class Profile {
     }
 
     public async sendFriendRequest(id: number, options?: IBaseApiParams): Promise<IFriendRequestResponse> {
-        return await this.client.call<DefaultResult, IFriendRequestResponse>({ path: `/profile/friend/request/send/${id}`, ...options });
+        return await this.client.call<SendFriendRequestResult, IFriendRequestResponse>({ path: `/profile/friend/request/send/${id}`, ...options });
     }
 
     public async removeFriendRequest(id: number, options?: IBaseApiParams): Promise<IFriendRequestResponse<RemoveFriendRequestResult>> {
@@ -95,11 +96,11 @@ export class Profile {
         return await this.client.call<DefaultResult, IPageableResponse<IVoteRelease>>({ path: `/profile/vote/release/voted/${id}/${page}`, queryParams: {sort}, ...options})
     }
 
-    public async getSocials(id: number, options: IBaseApiParams): Promise<ISocialResponse> {
+    public async getSocials(id: number, options?: IBaseApiParams): Promise<ISocialResponse> {
         return await this.client.call<DefaultResult, ISocialResponse>({ path: `/profile/social/${id}`, ...options });
     }
 
-    public async getUnvotedReleases(page: number | "last" = "last", options: IBaseApiParams): Promise<IPageableResponse<IRelease>> {
+    public async getUnvotedReleases(page: number | "last" = "last", options?: IBaseApiParams): Promise<IPageableResponse<IRelease>> {
         return await this.client.call<DefaultResult, IPageableResponse<IRelease>>({ path: `/profile/vote/release/unvoted/${page}`, ...options });
     }
 
@@ -108,6 +109,6 @@ export class Profile {
     }
 
     public async exportBookmarks(listIds: Array<number>, sort?: number, options?: IBaseApiParams): Promise<IExportBookmarksResponse> {
-        return await this.client.call<DefaultResult, IExportBookmarksResponse>({ path: "/export/bookmarks", json: { bookmarksExportProfileLists: listIds }, queryParams: {sort}, ...options })
+        return await this.client.call<BookmarkExportResult, IExportBookmarksResponse>({ path: "/export/bookmarks", json: { bookmarksExportProfileLists: listIds }, queryParams: {sort}, ...options })
     }
 }
